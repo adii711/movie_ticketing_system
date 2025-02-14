@@ -1,0 +1,19 @@
+<h1>Welcome to the Movie Ticketing System</h1>
+
+<% if current_admin %>
+    Logged in as Admin <%= current_admin.name%>.<br>
+    <%= link_to "Manage movies", movies_path %><br>
+    <%= link_to "Manage shows", shows_path %><br>
+    <%= link_to "Manage tickets", tickets_path %><br>
+    <%= link_to "Logout", admin_logout_path %><br>
+
+<% elsif current_user %>
+    Logged in as <%= current_user.name %>.<br>
+    <%= link_to 'View movies', movies_path %><br>
+    <%= link_to "Logout", logout_path %>
+
+<% else %>
+    <%= link_to "Signup", signup_path %> or
+    <%= link_to "Login", login_path %><br>
+    <%= link_to "Login as Admin", admin_login_path %>
+<% end %>
