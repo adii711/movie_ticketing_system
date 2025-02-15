@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :authorized_admin
   allow_browser versions: :modern
 
+  
   def current_admin
     if session[:admin_id]
       @current_admin ||= Admin.find_by(id: session[:admin_id])
