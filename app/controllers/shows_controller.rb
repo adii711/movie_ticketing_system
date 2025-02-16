@@ -33,7 +33,7 @@ class ShowsController < ApplicationController
   def create
     @show = Show.new(show_params)
     @movie = Movie.find_by(id: params[:show][:movie_id])  # Find the movie by ID
-    
+    @show.available_seats = @show.seats
     if @movie
       @show.movie = @movie  # Associate the show with the selected movie
       respond_to do |format|
@@ -54,10 +54,12 @@ class ShowsController < ApplicationController
 
   def destroy
     @show = Show.find(params[:id])
+    @movie = @show.movie
+    @show.tickets.destroy_all
     @show.destroy!
 
     respond_to do |format|
-      format.html { redirect_to shows_path, status: :see_other, notice: "Show was successfully destroyed." }
+      format.html { redirect_to movie_shows_path(@movie), status: :see_other, notice: "Show was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -65,6 +67,6 @@ class ShowsController < ApplicationController
 
   # Strong params to handle show fields
   def show_params
-    params.require(:show).permit( :movie_id, :date, :time, :seats, :price)
+    params.require(:show).permit( :movie_id, :date, :time, :seats, :price, :available_seats)
   end
 end

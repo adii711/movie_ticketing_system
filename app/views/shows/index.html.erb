@@ -9,6 +9,7 @@
     <%= render show %>
     <p>
       <%= link_to "Show this show", show %>
+      <%= link_to "Purchase Tickets", new_movie_show_ticket_path(@movie, show)%>
     </p>
   <% end %>
 </div>

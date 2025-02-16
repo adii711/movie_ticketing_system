@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   resources :tickets
-  resources :shows
+  resources :shows do
+    resources :tickets, only: [:new, :create]  # or include other actions as needed
+  end
   resources :movies do
-    resources :shows, only: [:index] # Nesting shows under movies
+    resources :shows do
+      resources :tickets, only: [:new, :create, :index]
+    end
   end
   resources :admins, only: [:edit, :update]
   root 'home#index'

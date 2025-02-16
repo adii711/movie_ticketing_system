@@ -2,7 +2,6 @@
   <% if ticket.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
-
       <ul>
         <% ticket.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -12,23 +11,23 @@
   <% end %>
 
   <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
+    <%= form.label :user_id, "User Email" %>
+    <%= form.collection_select :user_id, User.all, :id, :email, prompt: "Select a User" %>
   </div>
 
   <div>
-    <%= form.label :show_id, style: "display: block" %>
-    <%= form.text_field :show_id %>
+    <%= form.label :show_id, "Movie Title" %>
+    <%= form.collection_select :show_id, Show.includes(:movie).all, :id, ->(show) { "#{show.movie.title} - #{show.date} #{show.time}" }, prompt: "Select a Show" %>
   </div>
 
   <div>
-    <%= form.label :confirmation_number, style: "display: block" %>
-    <%= form.text_field :confirmation_number %>
+    <%= form.label :number_of_tickets, "Number of Tickets" %>
+    <%= form.number_field :number_of_tickets, min: 1, max: @show.available_seats %>
   </div>
 
   <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
+    <%= form.label :status %>
+    <%= form.select :status, ['Booked', 'Cancelled'] %>
   </div>
 
   <div>

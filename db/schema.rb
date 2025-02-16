@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_16_032257) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_16_083339) do
   create_table "admins", force: :cascade do |t|
     t.string "username"
     t.string "name"
@@ -40,6 +40,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_16_032257) do
     t.integer "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "available_seats"
     t.index ["movie_id"], name: "index_shows_on_movie_id"
   end
 
@@ -50,6 +51,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_16_032257) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "number_of_tickets"
     t.index ["show_id"], name: "index_tickets_on_show_id"
     t.index ["user_id"], name: "index_tickets_on_user_id"
   end

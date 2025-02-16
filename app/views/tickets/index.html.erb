@@ -1,18 +1,39 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "All Tickets" %>
 
-<% content_for :title, "Tickets" %>
+<!-- app/views/tickets/index.html.erb -->
 
-<h1>Tickets</h1>
+<h1>All Tickets</h1>
 
-<div id="tickets">
-  <% @tickets.each do |ticket| %>
-    <%= render ticket %>
-    <p>
-      <%= link_to "Show this ticket", ticket %>
-    </p>
-  <% end %>
-</div>
+<table>
+  <thead>
+    <tr>
+      
+      <th>User Name</th>
+      <th>Movie</th>
+      <th>Show Time</th>
+      <th>Confirmation Number</th>
+      <th> Number of Tickets </th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tickets.each do |ticket| %>
+      <tr>
+        
+        <td><%= ticket.user.username %></td> <!-- Display the user's name -->
+        <td><%= ticket.show.movie.title %></td> <!-- Display the movie name -->
+        <td><%= ticket.show.date.strftime("%I:%M %p") %></td> <!-- Show the show time, formatted -->
+        <td><%= ticket.confirmation_number %></td>
+        <td><%= ticket.number_of_tickets%></td>
+        <td><%= ticket.status %></td>
+        <td><%= link_to 'Edit', edit_ticket_path(ticket) %> | <%= link_to 'Destroy', ticket_path(ticket), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<%= link_to "New ticket", new_ticket_path %>
+<%= link_to 'New Ticket', new_ticket_path %>
+
 
 <%= link_to "Back to Main Menu", root_path %>

@@ -3,7 +3,6 @@
 <% if current_admin %>
     Logged in as Admin <%= current_admin.name%>.<br>
     <%= link_to "Manage movies", movies_path %><br>
-    <%= link_to "Manage shows", shows_path %><br>
     <%= link_to "Manage tickets", tickets_path %><br>
     <%= link_to "Logout", admin_logout_path %><br>
 
