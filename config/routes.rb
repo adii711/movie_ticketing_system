@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   end
   resources :movies do
     resources :shows do
-      resources :tickets, only: [:new, :create, :index]
+      resources :tickets
     end
   end
   resources :admins, only: [:edit, :update]

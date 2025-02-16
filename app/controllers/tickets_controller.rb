@@ -3,9 +3,13 @@ class TicketsController < ApplicationController
 
   # GET /tickets or /tickets.json
   def index
-    @shows = Show.find_by(id: params[:show_id])
-    @tickets= @shows.tickets
-    @movie = @shows.movie
+    if(params[:show_id])
+      @shows = Show.find_by(id: params[:show_id])
+      @tickets= @shows.tickets
+      @movie = @shows.movie
+    else 
+      @tickets=Ticket.all
+    end 
   end
 
   # GET /tickets/1 or /tickets/1.json
@@ -22,8 +26,9 @@ class TicketsController < ApplicationController
   def edit
     
     #@movie = Movie.find(params[:movie_id])  # Find the movie by ID
-    @show = Show.find_by(id: params[:show_id])  # Find the show by show_id
-    @ticket = @show.tickets.find(params[:id])  # Find the ticket by ID within the show
+    @ticket = Ticket.find(params[:id])
+    @show = @ticket.show
+
   end
 
   # POST /tickets or /tickets.json
@@ -54,9 +59,8 @@ class TicketsController < ApplicationController
   # PATCH/PUT /tickets/1 or /tickets/1.json
   def update
     #@movie = Movie.find(params[:movie_id])  # Find the movie by ID
-    @show = Show.find_by(id: params[:show_id])  # Find the show by show_id
-    @ticket = @show.tickets.find(params[:id])  # Find the ticket by ID within the show
-  
+    @ticket = Ticket.find(params[:id])
+    @show = @ticket.show
     # Store the old number of tickets and status before updating
     old_number_of_tickets = @ticket.number_of_tickets
     old_status = @ticket.status
@@ -94,9 +98,8 @@ class TicketsController < ApplicationController
   # DELETE /tickets/1 or /tickets/1.json
   def destroy
     #@movie = Movie.find(params[:movie_id])  # Find the movie by ID
-    @show = Show.find_by(id: params[:show_id])  # Find the show by show_id
-    @ticket = @show.tickets.find(params[:id])  # Find the ticket by ID within the show
-  
+    @ticket = Ticket.find(params[:id])
+    @show = @ticket.show
     respond_to do |format|
       # Before destroying the ticket, adjust the available seats
       @show.available_seats += @ticket.number_of_tickets
