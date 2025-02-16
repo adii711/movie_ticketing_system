@@ -5,7 +5,7 @@ class CreateShows < ActiveRecord::Migration[8.0]
       t.date :date
       t.time :time
       t.integer :seats
-      t.decimal :price
+      t.integer :ticket_price
 
       t.timestamps
     end

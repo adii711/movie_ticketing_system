@@ -11,11 +11,12 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :movie_id, style: "display: block" %>
-    <%= form.text_field :movie_id %>
+  <div class="form-group">
+  <%= form.label :movie_id, "Select Movie" %>
+  <%= form.collection_select :movie_id, @movies, :id, :title, { prompt: "Select a Movie", selected: @selected_movie&.id }, class: "form-control" %>
   </div>
 
+  
   <div>
     <%= form.label :date, style: "display: block" %>
     <%= form.date_field :date %>
@@ -32,7 +33,7 @@
   </div>
 
   <div>
-    <%= form.label :price, style: "display: block" %>
+    <%= form.label :ticket_price, style: "display: block" %>
     <%= form.text_field :price %>
   </div>
 

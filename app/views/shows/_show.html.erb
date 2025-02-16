@@ -1,7 +1,7 @@
 <div id="<%= dom_id show %>">
   <p>
     <strong>Movie:</strong>
-    <%= show.movie_id %>
+    <%= show.movie.title %>
   </p>
 
   <p>
@@ -11,7 +11,8 @@
 
   <p>
     <strong>Time:</strong>
-    <%= show.time %>
+    <%= show.time.strftime("%I:%M %p") %>
+
   </p>
 
   <p>
