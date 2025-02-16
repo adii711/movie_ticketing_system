@@ -19,7 +19,9 @@ class TicketsController < ApplicationController
   # GET /tickets/new
   def new
     @ticket = Ticket.new
-    @show = Show.find(params[:show_id])
+    if(params[:show_id])
+      @show = Show.find(params[:show_id])
+    end
   end
 
   # GET /tickets/1/edit
@@ -53,6 +55,10 @@ class TicketsController < ApplicationController
           format.json { render json: @ticket.errors, status: :unprocessable_entity }
         end
       end
+    else 
+      flash[:alert]="Not enough seats available to purchase the required number of tickets. Available seats: #{@ticket.show.available_seats}"
+      redirect_to tickets_path
+
     end
   end
 

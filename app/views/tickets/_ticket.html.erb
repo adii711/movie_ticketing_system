@@ -1,12 +1,17 @@
 <div id="<%= dom_id ticket %>">
   <p>
     <strong>User:</strong>
-    <%= ticket.user_id %>
+    <%= ticket.user.username %>
   </p>
 
   <p>
+    <strong>Movie:</strong>
+    <%= ticket.show.movie.title %>
+  </p>
+  
+  <p>
     <strong>Show:</strong>
-    <%= ticket.show_id %>
+    <%= ticket.show.date.strftime("%I:%M %p") %>
   </p>
 
   <p>

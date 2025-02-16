@@ -8,15 +8,15 @@
   <% @shows.each do |show| %>
     <%= render show %>
     <p>
-      <%= link_to "Show this show", show %>
+      <%= link_to "Show this show", show %> |
       <%= link_to "Purchase Tickets", new_movie_show_ticket_path(@movie, show)%>
     </p>
   <% end %>
 </div>
 
 <%if current_admin %>
-  <%= link_to "New show", new_show_path %>
+  <%= link_to "New show", new_show_path %> |
 <% end %>
 
-<%= link_to "Back to Main Menu", root_path %>
+<%= link_to "Back to Main Menu", root_path %> | 
 <%= link_to "Back to Movies", movies_path %>

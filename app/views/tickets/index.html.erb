@@ -1,6 +1,12 @@
 <% content_for :title, "All Tickets" %>
 
 <!-- app/views/tickets/index.html.erb -->
+<% if flash[:alert] %>
+
+  <p class="flash flash-alert"><%= flash[:alert] %></p>
+  
+
+<% end %>
 
 <h1>All Tickets</h1>
 
@@ -35,5 +41,6 @@
 
 <%= link_to 'New Ticket', new_ticket_path %>
 
+<%= link_to 'View All tickets', tickets_path%>
 
 <%= link_to "Back to Main Menu", root_path %>

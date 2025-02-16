@@ -17,12 +17,12 @@
 
   <div>
     <%= form.label :show_id, "Movie Title" %>
-    <%= form.collection_select :show_id, Show.includes(:movie).all, :id, ->(show) { "#{show.movie.title} - #{show.date} #{show.time}" }, prompt: "Select a Show" %>
+    <%= form.collection_select :show_id, Show.includes(:movie).all, :id, ->(show) { "#{show.movie.title} | #{show.date} | #{show.time.strftime("%I:%M %p")}" }, prompt: "Select a Show" %>
   </div>
 
   <div>
     <%= form.label :number_of_tickets, "Number of Tickets" %>
-    <%= form.number_field :number_of_tickets, min: 1, max: @show.available_seats %>
+    <%= form.number_field :number_of_tickets, min: 1 %>
   </div>
 
   <div>
