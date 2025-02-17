@@ -8,11 +8,12 @@ Rails.application.routes.draw do
       resources :tickets
     end
   end
-  resources :admins, only: [:edit, :update]
+  resources :admins, only: [:index,:new,:edit, :update]
   root 'home#index'
   resources :users
   resources :admin_sessions, only: [:new, :create, :destroy]
   resources :sessions, only: [:new, :create, :destroy]
+  get 'manage_users', to: "users#index", as: "manage_users"
   get 'signup', to: "users#new", as: 'signup'
   get 'login', to: "sessions#new", as: 'login'
   get 'logout', to: "sessions#destroy", as: 'logout'

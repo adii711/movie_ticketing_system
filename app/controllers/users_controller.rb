@@ -1,10 +1,14 @@
 class UsersController < ApplicationController
-  skip_before_action :authorized, only: [:new, :create]
+  skip_before_action :authorized, only: [ :new, :create ]
   before_action :set_user, only: %i[ show edit update destroy ]
 
   # GET /users or /users.json
   def index
     @users = User.all
+  end
+
+  def admin?
+    self.role == "admin"
   end
 
   # GET /users/1 or /users/1.json
@@ -52,12 +56,24 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, status: :see_other, notice: "User was successfully destroyed." }
+      if @user == current_user
+        reset_session
+        format.html { redirect_to root_path, notice: "Your account was successfully deleted and you have been logged out." }
+      else
+        format.html { redirect_to users_url, status: :see_other, notice: "User was successfully destroyed." }
+      end
       format.json { head :no_content }
     end
   end
 
   private
+
+    def authenticate_admin!
+      unless current_user.admin?
+        redirect_to root_path, alert: "You are not authorized to access this page."
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
@@ -65,6 +81,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :name, :email, :password, :phone_number, :address, :card_number, :expirate_date, :cvv )
+      params.require(:user).permit(:username, :name, :email, :password, :phone_number, :address, :card_number, :expirate_date, :cvv)
+      # Note: :username is not included here, so it cannot be updated
     end
 end

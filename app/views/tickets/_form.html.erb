@@ -11,26 +11,61 @@
   <% end %>
 
   <div>
-    <%= form.label :user_id, "User Email" %>
-    <%= form.collection_select :user_id, User.all, :id, :email, prompt: "Select a User" %>
+    <strong><%= form.label :user_id, "User Email: " %></strong>
+    <%= current_user.email %>
+  </div>
   </div>
 
   <div>
-    <%= form.label :show_id, "Movie Title" %>
-    <%= form.collection_select :show_id, Show.includes(:movie).all, :id, ->(show) { "#{show.movie.title} | #{show.date} | #{show.time.strftime("%I:%M %p")}" }, prompt: "Select a Show" %>
+    <%= form.label :show_id, "Movie Title :" %>
+    <%= @show.movie.title %> | <%= @show.date%> | <%= @show.time.strftime("%I:%M %p")%>
   </div>
-
+ 
+    
   <div>
     <%= form.label :number_of_tickets, "Number of Tickets" %>
     <%= form.number_field :number_of_tickets, min: 1 %>
   </div>
 
   <div>
+    <p><strong>Price per Ticket:</strong> $<%= @show.price %></p>
+    <p><strong>Total Price:</strong> $<span id="total_price"></span></p>
+  </div>
+
+  <div>
+    <p><strong>Credit Card Information:</strong></p>
+    <p>Card Holder: <%= @user.username %></p>
+    <p>Card Number: ** ** ** <%= @user.card_number.last(4) %></p>
+    <p>Expiry Date: <%= @user.expirate_date %></p>
+  </div>
+
+
+  <div>
     <%= form.label :status %>
     <%= form.select :status, ['Booked', 'Cancelled'] %>
   </div>
+
+  <%= form.hidden_field :show_id, value: @show.id %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
 
   <div>
     <%= form.submit %>
   </div>
 <% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const ticketInput = document.getElementById("num_tickets");
+    const pricePerTicket = <%= @show.price %>;
+    const totalPriceElement = document.getElementById("total_price");
+
+    function updateTotalPrice() {
+      const numTickets = parseInt(ticketInput.value) || 0;
+      totalPriceElement.innerText = (numTickets * pricePerTicket).toFixed(2);
+    }
+
+    ticketInput.addEventListener("input", updateTotalPrice);
+
+    updateTotalPrice()
+  });
+</script>

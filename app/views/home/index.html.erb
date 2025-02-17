@@ -4,11 +4,15 @@
     Logged in as Admin <%= current_admin.name%>.<br>
     <%= link_to "Manage movies", movies_path %><br>
     <%= link_to "Manage tickets", tickets_path %><br>
+    <%= link_to "Manage Users", manage_users_path%><br>
+    <%= link_to "Edit profile", edit_admin_path(current_admin.id) %><br>
     <%= link_to "Logout", admin_logout_path %><br>
 
 <% elsif current_user %>
     Logged in as <%= current_user.name %>.<br>
     <%= link_to 'View movies', movies_path %><br>
+    <%= link_to 'View Profile', manage_users_path %><br>
+    <%= link_to "View your tickets", tickets_path%><br>
     <%= link_to "Logout", logout_path %>
 
 <% else %>

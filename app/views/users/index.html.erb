@@ -4,13 +4,38 @@
 
 <h1>Users</h1>
 
-<div id="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
-  <% end %>
-</div>
 
-<%= link_to "New user", new_user_path %>
+<% if current_user %>
+  <!-- Display Current User Details -->
+  <h2>Current User Details</h2>
+  <div>
+    <p><strong>Username:</strong> <%= current_user.username %></p>
+    <p><strong>Name:</strong> <%= current_user.name %></p>
+    <p><strong>Email:</strong> <%= current_user.email %></p>
+    <p><strong>Phone Number:</strong> <%= current_user.phone_number %></p>
+    <p><strong>Address:</strong> <%= current_user.address %></p>
+    <p><strong>Card Number:</strong> <%= current_user.card_number %></p>
+    <p><strong>Expiration Date:</strong> <%= current_user.expirate_date %></p>
+    <p><strong>CVV:</strong> <%= current_user.cvv %></p>
+  </div>
+  <td>
+    <%= link_to 'Edit', edit_user_path(current_user) %> 
+  </td>
+  
+<% else %>
+  <!-- Display Regular Users List -->
+  <div id="users">
+    <% @users.each do |user| %>
+      <%= render user %>
+      <p>
+        <%= link_to "Show this user", user %>
+      </p>
+    <% end %>
+  </div>
+<% end %>
+
+
+<%if current_admin %>
+  <%= link_to "New user", new_user_path %>
+<% end %>
+<%= link_to "Back to Main Menu", root_path %>
